@@ -1,0 +1,32 @@
+
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "CampusPulse Demo Event",
+  "description": "Testing event creation",
+  "category": "Technical",
+  "department": "Computer Science",
+  "venue_name": "College Auditorium",
+  "start_time": "2026-10-20T10:00:00+05:30",
+  "end_time": "2026-10-20T13:00:00+05:30",
+  "total_capacity": 100,
+  "activity_credits": 2
+}
+
+###
+GET http://localhost:3000/api/events/2
+
+###
+PATCH http://localhost:3000/api/events/2
+Content-Type: application/json
+
+{
+  "venue_name": "Main Seminar Hall"
+}
+
+###
+PATCH http://localhost:3000/api/events/2/cancel
+Content-Type: application/json
+### Get cancelled event
+GET http://localhost:3000/api/events/2
