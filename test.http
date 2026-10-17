@@ -30,3 +30,11 @@ PATCH http://localhost:3000/api/events/2/cancel
 Content-Type: application/json
 ### Get cancelled event
 GET http://localhost:3000/api/events/2
+### Test student login
+POST http://localhost:3000/api/auth/student/login
+Content-Type: application/json
+
+{
+  "email": "test.student@campuspulse.local",
+  "password": "Student@123"
+}
