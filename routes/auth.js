@@ -94,4 +94,88 @@ router.post("/admin/login", (req, res) => {
   return login(req, res, "admin");
 });
 
+router.post("/student/signup", async (req, res) => {
+  try {
+    const { full_name, email, password, confirm_password } = req.body;
+
+    if (
+      typeof full_name !== "string" ||
+      typeof email !== "string" ||
+      typeof password !== "string" ||
+      typeof confirm_password !== "string" ||
+      !full_name.trim() ||
+      !email.trim() ||
+      !password
+    ) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      return res.status(400).json({
+        message: "Enter a valid email address",
+      });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters",
+      });
+    }
+
+    if (password !== confirm_password) {
+      return res.status(400).json({
+        message: "Passwords do not match",
+      });
+    }
+
+    const existingUser = await pool.query(
+      `SELECT user_id FROM users WHERE LOWER(email) = $1`,
+      [normalizedEmail]
+    );
+
+    if (existingUser.rows.length > 0) {
+      return res.status(409).json({
+        message: "An account with this email already exists",
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const result = await pool.query(
+      `INSERT INTO users (
+        full_name,
+        email,
+        password_hash,
+        role,
+        sso_verified,
+        created_at
+      )
+      VALUES ($1, $2, $3, 'student', false, NOW())
+      RETURNING user_id, full_name, email, role`,
+      [full_name.trim(), normalizedEmail, passwordHash]
+    );
+
+    return res.status(201).json({
+      message: "Student account created successfully",
+      user: result.rows[0],
+    });
+  } catch (error) {
+    if (error.code === "23505") {
+      return res.status(409).json({
+        message: "An account with this email already exists",
+      });
+    }
+
+    console.error("Signup error:", error.message);
+
+    return res.status(500).json({
+      message: "Signup failed due to a server error",
+    });
+  }
+});
+
 module.exports = router;
