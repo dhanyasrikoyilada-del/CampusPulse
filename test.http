@@ -36,5 +36,25 @@ Content-Type: application/json
 
 {
   "email": "test.student@campuspulse.local",
-  "password": "Student@123"
+  "password": "REPLACE_WITH_LOCAL_TEST_PASSWORD"
+}
+
+### Test student signup
+POST http://localhost:3000/api/auth/student/signup
+Content-Type: application/json
+
+{
+  "full_name": "Demo Student",
+  "email": "demo.student@example.com",
+  "password": "REPLACE_WITH_TEST_PASSWORD",
+  "confirm_password": "REPLACE_WITH_TEST_PASSWORD"
+}
+
+### Login with newly registered account
+POST http://localhost:3000/api/auth/student/login
+Content-Type: application/json
+
+{
+  "email": "demo.student@example.com",
+  "password": "REPLACE_WITH_TEST_PASSWORD"
 }
