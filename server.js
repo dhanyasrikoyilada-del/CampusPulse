@@ -1,6 +1,7 @@
 
 const express = require("express");
 const pool = require("./config/db");
+const authRoutes = require("./routes/auth");
 
 require("dotenv").config();
 
@@ -8,6 +9,7 @@ const app = express();
 const eventsRouter = require("./routes/events");
 
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 app.use("/api/events", eventsRouter);
 
 app.get("/", (req, res) => {
