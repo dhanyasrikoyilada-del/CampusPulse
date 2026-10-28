@@ -32,7 +32,11 @@ router.get("/", async (req, res) => {
 });
 
 // POST: Create a new event
-router.post("/", async (req, res) => {
+router.patch(
+    "/:id/cancel",
+    authenticateToken,
+    requireRole("admin"),
+    async (req, res) =>  {
     const {
         title, description, category, department, venue_name,
         start_time, end_time, total_capacity, activity_credits,
@@ -396,3 +400,7 @@ router.patch("/:id/cancel", async (req, res) => {
 });
 
 module.exports = router;
+const {
+    authenticateToken,
+    requireRole,
+} = require("../middleware/authMiddleware");
