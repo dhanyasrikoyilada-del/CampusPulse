@@ -32,8 +32,8 @@ router.get("/", async (req, res) => {
 });
 
 // POST: Create a new event
-router.patch(
-    "/:id/cancel",
+router.post(
+    "/",
     authenticateToken,
     requireRole("admin"),
     async (req, res) =>  {
