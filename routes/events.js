@@ -140,7 +140,11 @@ router.post(
 
 // PATCH: Update an existing published event
 // Local testing only until faculty/admin authorization is implemented.
-router.patch("/:id", async (req, res) => {
+router.patch(
+    "/:id",
+    authenticateToken,
+    requireRole("admin"),
+    async (req, res) =>  {
     const eventId = req.params.id;
 
     if (!/^\d+$/.test(eventId) || Number(eventId) < 1) {
