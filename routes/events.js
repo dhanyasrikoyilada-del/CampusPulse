@@ -411,9 +411,3 @@ router.patch(
         });
     }
 });
-
-module.exports = router;
-const {
-    authenticateToken,
-    requireRole,
-} = require("../middleware/authMiddleware");
