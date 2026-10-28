@@ -350,7 +350,11 @@ router.get("/:id", async (req, res) => {
 
 /* PATCH: Cancel a published event
    Local testing only until faculty/admin authorization is added. */
-router.patch("/:id/cancel", async (req, res) => {
+router.patch(
+    "/:id/cancel",
+    authenticateToken,
+    requireRole("admin"),
+    async (req, res) => {
     const eventId = req.params.id;
 
     if (!/^\d+$/.test(eventId) || Number(eventId) < 1) {
