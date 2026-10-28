@@ -72,3 +72,11 @@ Content-Type: application/json
   "total_capacity": 50,
   "activity_credits": 2
 }
+### Admin Login
+POST http://localhost:3000/api/auth/admin/login
+Content-Type: application/json
+
+{
+  "email": "dhanyasrikoyilada@gmail.com",
+  "password": "Dhanya@2007"
+}
