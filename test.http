@@ -58,3 +58,17 @@ Content-Type: application/json
   "email": "demo.student@example.com",
   "password": "REPLACE_WITH_TEST_PASSWORD"
 }
+### Test: Event creation without authentication
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Test Workshop",
+  "category": "Technology",
+  "department": "CSE",
+  "venue_name": "Seminar Hall",
+  "start_time": "2026-11-15T10:00:00+05:30",
+  "end_time": "2026-11-15T12:00:00+05:30",
+  "total_capacity": 50,
+  "activity_credits": 2
+}

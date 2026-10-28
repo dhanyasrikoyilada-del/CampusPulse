@@ -2,6 +2,11 @@
 const express = require("express");
 const pool = require("../config/db");
 
+const {
+    authenticateToken,
+    requireRole,
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 // GET: Retrieve all published events
